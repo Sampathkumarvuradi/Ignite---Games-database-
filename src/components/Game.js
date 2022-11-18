@@ -6,8 +6,10 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { loadDetail } from "../actions/detailAction";
 import { Link } from "react-router-dom";
+import { smallImage } from "../util";
 
 const Game = ({ name, released, image, id }) => {
+  const StringPathId = id.toString();
   // Load Details
   const dispatch = useDispatch();
   const loadDetailHandler = () => {
@@ -15,11 +17,15 @@ const Game = ({ name, released, image, id }) => {
     dispatch(loadDetail(id));
   };
   return (
-    <StyledGame onClick={loadDetailHandler}>
+    <StyledGame layoutId={StringPathId} onClick={loadDetailHandler}>
       <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
+        <motion.h3 layoutId={`title ${StringPathId}`}>{name}</motion.h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        <motion.img
+          layoutId={`image ${StringPathId}`}
+          src={smallImage(image, 640)}
+          alt={name}
+        />
       </Link>
     </StyledGame>
   );
